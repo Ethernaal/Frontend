@@ -5,19 +5,19 @@ import { ethers } from "ethers";
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
-import TokenArtifact from "../contracts/Token.json";
-import contractAddress from "../contracts/contract-address.json";
+// import TokenArtifact from "../contracts/Token.json";
+// import contractAddress from "../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
 // These other components are just presentational ones: they don't have any
 // logic. They just render HTML.
 import { NoWalletDetected } from "./NoWalletDetected";
 import { ConnectWallet } from "./ConnectWallet";
-import { Loading } from "./Loading";
-import { Transfer } from "./Transfer";
-import { TransactionErrorMessage } from "./TransactionErrorMessage";
-import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
-import { NoTokensMessage } from "./NoTokensMessage";
+// import { Loading } from "./Loading";
+// import { Transfer } from "./Transfer";
+// import { TransactionErrorMessage } from "./TransactionErrorMessage";
+// import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
+// import { NoTokensMessage } from "./NoTokensMessage";
 import { Header } from './Header'
 import { Main } from './Main'
 
@@ -97,7 +97,7 @@ export class Dapp extends React.Component {
     // if (!this.state.tokenData || !this.state.balance) {
     //   return <Loading />;
     // }
-    let currentPricePercentage = (this.state.currentSupply / 8000) * 100;
+    // let currentPricePercentage = (this.state.currentSupply / 8000) * 100;
 
     // If everything is loaded, we render the application.
     return (

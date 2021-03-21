@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Web3 from 'web3';
 
 import { Grid, Cell } from "styled-css-grid";
@@ -45,8 +44,6 @@ export default class UploadNftForm extends Component {
   };
 
   create = async () => {
-    let hash = "QmQLJBPeiwbiKpmvaQrv2ru1vHY3gmUb2DadjdXbUC3ZZD";
-    let wallletAddress = "0x60f80121c31a0d46b5279700f9df786054aa5ee5";
     let ipfsMetaUrl = "https://ipfs.infura.io/ipfs/" + this.state.ipfsHash;
     // axios
     //   .get("https://ipfs.infura.io/ipfs/" + this.state.ipfsHash)
@@ -96,14 +93,15 @@ export default class UploadNftForm extends Component {
 
     let response = await metaDataUpload(dataP);
 
-    let provider = new web3.providers.HttpProvider("https://rinkeby.infura.io/v3/fe44d28e1c184e6bb159f8839d4c965d")
-    web3.setProvider(provider)
-    const accounts = await web3.eth.getAccounts();
-    debugger
-    mintNft(accounts[0])
-    .then((response) => {console.log(response);})
-    .catch((error) => {console.log(error)});
-
+    if(response){
+      let provider = new web3.providers.HttpProvider("https://rinkeby.infura.io/v3/fe44d28e1c184e6bb159f8839d4c965d")
+      web3.setProvider(provider)
+      const accounts = await web3.eth.getAccounts();
+      debugger
+      mintNft(accounts[0])
+      .then((response) => {console.log(response);})
+      .catch((error) => {console.log(error)});
+    }
   };
   onInputchange = (event) => {
     this.setState({

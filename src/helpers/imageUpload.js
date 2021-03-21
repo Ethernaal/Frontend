@@ -1,6 +1,5 @@
 //imports needed for this function
 const axios = require('axios');
-const fs = require('fs');
 const FormData = require('form-data');
 
 const pinFileToIPFS = (file) => {

@@ -27,12 +27,12 @@ const pinJSONToIPFS = (data) => {
                 pinata_secret_api_key: "c78c21e894412085804708db7978fa89f2469abad803c444ca17641c13cb947b"
             }
         })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        // .then(function (response) {
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 };
 
 export default pinJSONToIPFS

@@ -1,8 +1,6 @@
-const fs = require('fs');
+// const fs = require('fs');
 const Web3 = require('web3');
-const BN = require('bn.js');
-var Contract = require('web3-eth-contract');
-const tx = require('ethereumjs-tx')
+// var Contract = require('web3-eth-contract');
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 //https://rinkeby.infura.io/v3/b2b6bac2bdd9429aa801be3f4fdf80b0
 //https://node-rinkeby.rarible.com
