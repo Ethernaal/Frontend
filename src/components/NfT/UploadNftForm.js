@@ -7,9 +7,6 @@ import metaDataUpload from "../../helpers/metaDataUpload";
 import mintNft from "../../helpers/mintNft";
 import getNonce from "../../helpers/getNonce";
 import "./custom.css";
-
-const web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/fe44d28e1c184e6bb159f8839d4c965d"));
-
 export default class UploadNftForm extends Component {
   state = {
     isUploaded: false,
@@ -45,7 +42,7 @@ export default class UploadNftForm extends Component {
   };
 
   create = async () => {
-    let ipfsMetaUrl = "https://ipfs.infura.io/ipfs/" + this.state.ipfsHash;
+    // let ipfsMetaUrl = "https://ipfs.infura.io/ipfs/" + this.state.ipfsHash;
     // axios
     //   .get("https://ipfs.infura.io/ipfs/" + this.state.ipfsHash)
     //   .then((res) => {

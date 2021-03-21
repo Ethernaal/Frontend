@@ -25,7 +25,6 @@ const mintNft = async (makeraddress, tokenId, metaHash) => {
 	const contract = new web3.eth.Contract(contractAbi, config.erc721ContractAddress)
 
 	// const nonce = getRandomInt(10000, 99999)
-	const addr = makeraddress + "b000000000000000000" + "12348";
 	const invocation = contract.methods
 		.mintAndTransfer(
 			[
@@ -50,12 +49,6 @@ const mintNft = async (makeraddress, tokenId, metaHash) => {
             .once("transactionHash", resolve)
             .once("error", reject)});
 	
-}
-
-function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export default mintNft;
