@@ -13,7 +13,7 @@ export const Header = () => (
               <div className="p-1 ml-3"><img width={400} src={logo} alt="Logo" /></div>
             </div>
               <div className="d-flex justify-content-center">
-                <div className="p-4 mt-2">PORTFOLIO</div>
+                <div className="p-4 mt-2"><Link style={{ color: '#000' }} to='/'>PORTFOLIO</Link></div>
                 <div className="p-4 mt-2"><Link style={{ color: '#000' }} to='/artist'>ARTISTS</Link></div>
                 <div className="p-4 mt-2">ETHERNAAL MUSEUM</div>
                 <div className="p-4 mt-2">DeFi</div>
