@@ -3,12 +3,14 @@ import {
     Link
   } from 'react-router-dom'
 import logo from '../images/logo.png';
+import roundedLogo from '../images/roundedLogo.png';
 
 export const Header = () => (
            <header className="header">
           <div>
             <div className="d-flex justify-content-start">
-              <div className="p-2 ml-5"><img width={400} src={logo} alt="Logo" /></div>
+              <div className="p-1 ml-3"><img width={100} src={roundedLogo} alt="Logo" /></div>
+              <div className="p-1 ml-3"><img width={400} src={logo} alt="Logo" /></div>
             </div>
               <div className="d-flex justify-content-center">
                 <div className="p-4 mt-2">PORTFOLIO</div>
