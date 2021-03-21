@@ -17,7 +17,7 @@ export const Header = () => (
                 <div className="p-4 mt-2"><Link style={{ color: '#000' }} to='/artist'>ARTISTS</Link></div>
                 <div className="p-4 mt-2">ETHERNAAL MUSEUM</div>
                 <div className="p-4 mt-2">DeFi</div>
-                <div className="p-4 mt-2">DAO</div>
+                <div className="p-4 mt-2"><a style={{ color: '#000' }} rel="noopener noreferrer" target={'_blank'} href='https://rinkeby.client.aragon.org/#/ethernaal/'>DAO</a></div>
                 <div className="p-4 mt-2">WORDPRESS</div>
                 <div className="p-4 mt-2"><Link style={{ color: '#000' }}  to='/upload'>CREATE</Link></div>
               <div className="p-4">
