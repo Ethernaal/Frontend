@@ -7,6 +7,10 @@ import metaDataUpload from "../../helpers/metaDataUpload";
 import mintNft from "../../helpers/mintNft";
 import getNonce from "../../helpers/getNonce";
 import "./custom.css";
+
+const ipfsAPI = require('ipfs-http-client');
+const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
+
 export default class UploadNftForm extends Component {
   state = {
     isUploaded: false,
@@ -27,7 +31,10 @@ export default class UploadNftForm extends Component {
 
     try {
       let response = await sendileToIPFS(file);
-      debugger;
+      debugger
+      const ipfsResult = await ipfs.add(file, {onlyHash: true})
+      console.log({path: ipfsResult.path})
+
       this.setState({
         imageBuffer: myBuffer,
         isUploaded: true,
@@ -35,6 +42,7 @@ export default class UploadNftForm extends Component {
         artistNameResidence: "",
         description: "",
         price: "",
+        websiteURL:"https://rec0ver.eth.link/",
         ipfsHash: response.data.IpfsHash,
         response: response,
       });
@@ -42,55 +50,41 @@ export default class UploadNftForm extends Component {
   };
 
   create = async () => {
-    // let ipfsMetaUrl = "https://ipfs.infura.io/ipfs/" + this.state.ipfsHash;
-    // axios
-    //   .get("https://ipfs.infura.io/ipfs/" + this.state.ipfsHash)
-    //   .then((res) => {
-    //     console.log("IPFS response: " + JSON.stringify(res.data));
-    //     debugger;
-    //     if (
-    //       this.state.description &&
-    //       this.state.isUploaded &&
-    //       this.state.title &&
-    //       this.state.artistNameResidence &&
-    //       this.state.price
-    //     ) {
-    //       this.setState({
-    //         nft: {
-    //           ipfsImageUrl: res.data.image,
-    //           ipfsImageHash: res.data.image.substr(
-    //             res.data.image.lastIndexOf("/") + 1
-    //           ),
-    //           ipfsMetadataUrl: ipfsMetaUrl,
-    //           ipfsMetadataHash: this.state.ipfsHash,
-    //           metadataBuffer: res.data,
-    //         },
-    //       });
-    //     }
-    //   });
 
     const [selectedAddress] = await window.ethereum.enable();
-
+    let contractAddress = "0x25646B08D9796CedA5FB8CE0105a51820740C049"
     let tokenId = await getNonce("0x25646B08D9796CedA5FB8CE0105a51820740C049",selectedAddress)
-    // https://ipfs.rarible.com/ipfs/QmS4UgBFBb11C6oT8RkKSGH92ZGgXT2hFTG7t89kopBshn/image.jpeg
-    let dataP = JSON.stringify({
-      name: "TestNFT",
-      description: "Test NFT",
-      image: "https://ipfs.rarible.com/ipfs/QmS4UgBFBb11C6oT8RkKSGH92ZGgXT2hFTG7t89kopBshn/image.jpeg",
-      external_url: "https://ipfs.rarible.com/ipfs/QmS4UgBFBb11C6oT8RkKSGH92ZGgXT2hFTG7t89kopBshn/image.jpeg",
-      artist_url: "an ENS URL pointing to the artists site",
-      artist_years_of_experience: 4,
-      artist_location: "London",
-      attributes: [
-        {
-          key: "Test",
-          trait_type: "Test",
-          value: "Test",
-        },
-      ],
-    });
+    const externalUrl = `https://rinkeby.rarible.com/${contractAddress}:${tokenId}`
+    debugger
+    // let dataP = JSON.stringify({
+    //   name: "TestNFT",
+    //   description: "Test NFT",
+    //   "image": `ipfs://ipfs/${uploadedImage.IpfsHash}`,
+    //   external_url: externalUrl,
+    //   attributes: [
+    //     {
+    //       key: "Test",
+    //       trait_type: "Test",
+    //       value: "Test",
+    //     },
+    //   ],
+    // });
 
-    let response = await metaDataUpload(dataP);
+    const metadata = {
+      "name": "NAME HERE",
+      "description": "DESC HERE",
+      "image": `ipfs://ipfs/${this.state.IpfsHash}`,
+      "external_url": externalUrl,
+      "attributes": [
+         {
+            "key": "test",
+            "trait_type": "test",
+            "value": "test"
+         }
+      ]
+   }
+
+    let response = await metaDataUpload(metadata);
 
     if (response) {
       // let provider = new web3.providers.HttpProvider(
@@ -105,7 +99,7 @@ export default class UploadNftForm extends Component {
             // Acccounts now exposed
            
             const accounts = await window.web3.eth.getAccounts();
-            debugger;
+
             mintNft(accounts[0], tokenId, "/ipfs/"+response.data.IpfsHash)
               .then((response) => {
                 console.log(response);
@@ -193,6 +187,35 @@ export default class UploadNftForm extends Component {
                     </div>
                   </Cell>
                   <Cell>Description</Cell>
+                </Grid>
+                <Grid columns={3}>
+                  <Cell>
+                    <div className="row no-gutters align-items-center">
+                      <input
+                        className="form-control border-secondary"
+                        type="number"
+                        name="artisExperience"
+                        id="example-search-input2"
+                        onChange={this.onInputchange}
+                      />
+                    </div>
+                  </Cell>
+                  <Cell>Artist Yeears of Experience</Cell>
+                </Grid>
+                <Grid columns={3}>
+                  <Cell>
+                    <div className="row no-gutters align-items-center">
+                      <input
+                        className="form-control border-secondary"
+                        value={this.state.websiteURL}
+                        type="text"
+                        name="websiteURL"
+                        id="example-search-input2"
+                        onChange={this.onInputchange}
+                      />
+                    </div>
+                  </Cell>
+                  <Cell> Website URL</Cell>
                 </Grid>
                 <Grid columns={3}>
                   <Cell>

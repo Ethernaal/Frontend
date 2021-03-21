@@ -11,6 +11,7 @@
     "bootstrap": "^4.4.1",
     "ethereumjs-tx": "^2.1.2",
     "ethers": "^5.0.32",
+    "ipfs-http-client": "^49.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

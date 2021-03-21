@@ -23,7 +23,7 @@ const contractAbi = JSON.parse(`[{ "inputs": [ { "components": [ { "internalType
 
 const mintNft = async (makeraddress, tokenId, metaHash) => {
 	const contract = new web3.eth.Contract(contractAbi, config.erc721ContractAddress)
-
+	debugger
 	// const nonce = getRandomInt(10000, 99999)
 	const invocation = contract.methods
 		.mintAndTransfer(
@@ -43,8 +43,8 @@ const mintNft = async (makeraddress, tokenId, metaHash) => {
                     to: config.erc721ContractAddress,
                     from: makeraddress,
                     chainId: await window.web3.eth.net.getId(),
-                    gasPrice:"50000000000",
-                    gas: "10000000"
+                    gasPrice:"50000000",
+                    gas: "100000"
             })
             .once("transactionHash", resolve)
             .once("error", reject)});
