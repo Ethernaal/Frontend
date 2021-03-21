@@ -1,0 +1,16 @@
+.custom-file-input ~ .custom-file-label::after {
+    content: none;
+    border-color:red !important;
+}
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+    content: none !important;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    display:none;
+  }
+
+.custom-file-label::after{
+    display:none !important;
+}

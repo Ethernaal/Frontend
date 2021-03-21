@@ -25,6 +25,14 @@ import { Main } from './Main'
 // Here's a list of network ids https://docs.metamask.io/guide/ethereum-provider.html#properties
 // to use when deploying to other networks.
 const HARDHAT_NETWORK_ID = "31337";
+const RINKEBY_NETWORK_ID = "4";
+
+const config = {
+	private: "db989f6cdb28df53e3b3983858590efe13115e70a263d50eef2f7f601922edb1",
+	rpc: "https://rinkeby.infura.io/v3/b2b6bac2bdd9429aa801be3f4fdf80b0",
+	erc721ContractAddress: "0x25646B08D9796CedA5FB8CE0105a51820740C049",
+	apiBaseUrl: "https://api-staging.rarible.com"
+}
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -86,9 +94,9 @@ export class Dapp extends React.Component {
 
     // If the token data or the user's balance hasn't loaded yet, we show
     // a loading component.
-    if (!this.state.tokenData || !this.state.balance) {
-      return <Loading />;
-    }
+    // if (!this.state.tokenData || !this.state.balance) {
+    //   return <Loading />;
+    // }
     let currentPricePercentage = (this.state.currentSupply / 8000) * 100;
 
     // If everything is loaded, we render the application.
@@ -165,12 +173,13 @@ export class Dapp extends React.Component {
   async _intializeEthers() {
     // We first initialize ethers by creating a provider using window.ethereum
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contractAbi = JSON.parse(`[{ "inputs": [ { "components": [ { "internalType": "uint256", "name": "tokenId", "type": "uint256" }, { "internalType": "string", "name": "uri", "type": "string" }, { "internalType": "address[]", "name": "creators", "type": "address[]" }, { "components": [ { "internalType": "address payable", "name": "account", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "internalType": "struct LibPart.Part[]", "name": "royalties", "type": "tuple[]" }, { "internalType": "bytes[]", "name": "signatures", "type": "bytes[]" } ], "internalType": "struct LibERC721LazyMint.Mint721Data", "name": "data", "type": "tuple" }, { "internalType": "address", "name": "to", "type": "address" } ], "name": "mintAndTransfer", "outputs": [], "stateMutability": "nonpayable", "type": "function" }]`)
 
     // When, we initialize the contract using that provider and the token's
     // artifact. You can do this same thing with your contracts.
     this._token = new ethers.Contract(
-      contractAddress.Token,
-      TokenArtifact.abi,
+      config.erc721ContractAddress,
+      contractAbi,
       this._provider.getSigner(0)
     );
   }
@@ -183,10 +192,10 @@ export class Dapp extends React.Component {
   // don't need to poll it. If that's the case, you can just fetch it when you
   // initialize the app, as we do with the token data.
   _startPollingData() {
-    this._pollDataInterval = setInterval(() => this._updateBalance(), 1000);
+    // this._pollDataInterval = setInterval(() => this._updateBalance(), 1000);
 
-    // We run it once immediately so we don't have to wait for it
-    this._updateBalance();
+    // // We run it once immediately so we don't have to wait for it
+    // this._updateBalance();
   }
 
   _stopPollingData() {
@@ -197,28 +206,9 @@ export class Dapp extends React.Component {
   // The next two methods just read from the contract and store the results
   // in the component state.
   async _getTokenData() {
-    const name = await this._token.name();
-    const symbol = await this._token.symbol();
-    const currentSupply = await this._token.totalSupply();
-    this.setState({ tokenData: { name, symbol, currentSupply } });
-  }
-
-  async getNFTPrice(currentSupply) {
-    if (currentSupply >= 8270) {
-      return "100000000000000000000"; // 8270 - 8275 100 ETH
-    } else if (currentSupply >= 7885) {
-      return "5000000000000000000"; // 7885 - 8269 5.0 ETH
-    } else if (currentSupply >= 7300) {
-      return "3400000000000000000"; // 7300  - 7884 3.4 ETH
-    } else if (currentSupply >= 5400) {
-      return "1800000000000000000"; // 5400 - 7299 1.8 ETH
-    } else if (currentSupply >= 3400) {
-      return "1000000000000000000"; // 3400 - 5399 1.0 ETH
-    } else if (currentSupply >= 1500) {
-      return "600000000000000000"; // 1500 - 3399 0.6 ETH
-    } else {
-      return "200000000000000000"; // 0 - 1499 0.2 ETH
-    }
+    // const name = await this._token.name();
+    // const symbol = await this._token.symbol();
+    // this.setState({ tokenData: { name, symbol } });
   }
 
   async _updateBalance() {
@@ -313,7 +303,7 @@ export class Dapp extends React.Component {
 
   // This method checks if Metamask selected network is Localhost:8545
   _checkNetwork() {
-    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID) {
+    if (window.ethereum.networkVersion === HARDHAT_NETWORK_ID || window.ethereum.networkVersion === RINKEBY_NETWORK_ID) {
       return true;
     }
 

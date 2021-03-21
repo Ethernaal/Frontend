@@ -12,12 +12,12 @@ export const Header = () => (
             </div>
               <div className="d-flex justify-content-center">
                 <div className="p-4 mt-2">PORTFOLIO</div>
-                <div className="p-4 mt-2"><Link to='/artist'>ARTIST</Link></div>
+                <div className="p-4 mt-2"><Link style={{ color: '#000' }} to='/artist'>ARTISTS</Link></div>
                 <div className="p-4 mt-2">ETHERNAAL MUSEUM</div>
                 <div className="p-4 mt-2">DeFi</div>
                 <div className="p-4 mt-2">DAO</div>
                 <div className="p-4 mt-2">WORDPRESS</div>
-                <div className="p-4 mt-2">REGISTER</div>
+                <div className="p-4 mt-2"><Link style={{ color: '#000' }}  to='/upload'>CREATE</Link></div>
               <div className="p-4">
                 <div className="row no-gutters align-items-center">
                   <input
